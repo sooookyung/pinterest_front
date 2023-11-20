@@ -1,0 +1,26 @@
+.profile-ownership {
+  font-size: 30px;
+}
+.obutton {
+  background-color: red;
+  border: 2px solid white;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.5s;
+  border-radius: 30px;
+  float: right;
+}
+.obutton:hover {
+  background-color: white;
+  color: black;
+  border-radius: 30px;
+}
+.fa-solid fa-globe fa-flip {
+  font-size: 30px;
+  color: black;
+  float: left;
+}

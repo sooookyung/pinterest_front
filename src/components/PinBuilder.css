@@ -1,0 +1,37 @@
+.MuiPaper-wrapper {
+  display: center;
+  padding: 150px;
+  background-color: #e0e0e0;
+  border-radius: 20px;
+}
+
+.image-root {
+  border: 0;
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+  border-radius: 20px;
+}
+
+.box1 {
+  float: left;
+  width: 450px;
+  height: 750px;
+  border-radius: 20px;
+}
+
+.box2 {
+  display: inline-block;
+  width: 450px;
+  height: 750px;
+  background-color: #666666;
+  margin-left: 10px;
+  border-radius: 20px;
+}
+
+.box2-top {
+  width: 450px;
+  height: 90px;
+  background-color: yellow;
+  border-radius: 20px;
+}

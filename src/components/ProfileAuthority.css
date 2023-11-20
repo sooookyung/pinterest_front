@@ -1,0 +1,38 @@
+.profile-authority {
+  font-size: 30px;
+}
+.font2 {
+  font-size: 20px;
+}
+.font3 {
+  font-size: 15px;
+  font-style: color gray;
+}
+input[type="radio"] {
+  border: 1px solid rgba(0, 0, 0, 0.51);
+  color: white;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 3px;
+}
+input[type="radio"]:checked + label {
+  font-weight: bold;
+  /* color: red; */
+}
+#check {
+  width: 30px;
+  height: 30px;
+  margin: 0px;
+  appearance: none;
+  border: 1px solid rgba(0, 0, 0, 0.51);
+  border-radius: 15px;
+  position: relative;
+  top: -10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.51);
+}
+#check:checked {
+  margin-left: 20px;
+  background-color: rgb(195, 40, 40);
+}

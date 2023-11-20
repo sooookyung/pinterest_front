@@ -1,0 +1,24 @@
+.profile-notificationsettings {
+  font-size: 30px;
+}
+.pfont {
+  font-size: 18px;
+}
+.nbutton {
+  background-color: red;
+  border: 2px solid white;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.5s;
+  border-radius: 30px;
+  float: right;
+}
+.nbutton:hover {
+  background-color: white;
+  color: black;
+  border-radius: 30px;
+}
