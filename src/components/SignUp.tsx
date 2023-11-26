@@ -46,7 +46,7 @@ function Copyright(props: TypographyProps) {
     <Typography //텍스트 스타일 설정하는 MUI
       variant="body2"
       color="text.secondary"
-      align="center" //정렬
+      align="center" //정렬-가운데
       {...props} //부모 컴포넌트에 전달된 속성을 그대로 사용 할 수 있다.
     >
       {"Copyright © "}
@@ -59,13 +59,13 @@ function Copyright(props: TypographyProps) {
   );
 } //new Date() : 자바스크립트 Data객체
 
-//SignUp함수정의 : 회원가입 페이지 구현하는 함수 컴포넌트 정의.
-type SignUpUser = { pwd: string } & NonNullable<User>;
+//SignUpUser함수정의 : 회원가입 페이지 구현하는 함수 컴포넌트 정의.
+type SignUpUser = { pwd: string } & NonNullable<User>; //null, undefined가 아닌거
 // pwd가 문자열타입이고, 값이 있는 'User'타입을 가지는 객체를 나타내는 'SignUpUser'
 export default function SignUp() {
-  //SignUp 함수형 컴포넌트를 정의하고 외부에서 재사용할 수 있도록 함<div className=""></div>
+  //SignUp 함수형 컴포넌트를 정의하고 외부에서 재사용할 수 있도록 함
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    //폼이 발생했을 때 실행되는 함수를 정의. 이벤트 객체 받아와서 아래 회원가입 처리구현
+    //폼이 발생했을 때 실행되는 handleSubmit함수를 정의. 폼데이터 수집해서sighUpUser객체생성. 아래 회원가입 처리구현
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     //폼 제출 이벤트 다룰 때 사용. 사용자가 폼에 입력힌 값을 담고 있는 객체
@@ -84,7 +84,7 @@ export default function SignUp() {
     console.log(json);
 
     fetch(SERVER_URL + "/members", {
-      //서버로 데이터를 전송하기 위해 fetch함수사용
+      //서버로 데이터를 전송하기 위해 fetch함수사용/서버로 POST요청 보냄
       body: json,
       method: "POST",
       headers: {
@@ -110,13 +110,15 @@ export default function SignUp() {
   const [pwdHelperText, setPwdHelperText] =
     useState("비밀번호를 입력해주세요.");
 
+  /*아래 함수는 사용자가 아이디 입력할 때마다 해당 아이디가 사용중인지 
+    서버에 확인하고 그 결과에 따라 화면에 메세지 표시함*/
   function handleIdChange(e: React.ChangeEvent<HTMLInputElement>) {
     //아이디 입력이 변경될 때 호출되는 함수를 정의
     const id = e.target.value; //입력된 아이디 값을 id변수에 저장
     if (!id) {
       setIdHelperText("아이디를 입력해주세요.");
       return;
-      //아이디가 비어있으면 메세지보이고 함수 종료됨
+      //아이디가 비어있으면 문자보이고 함수 종료됨
     }
     fetch(SERVER_URL + "/members/" + id)
       //서버에 해당 아이디가 이미 존재하는지 확인하는 요청 보냄
@@ -126,22 +128,27 @@ export default function SignUp() {
         } else {
           setIdHelperText("");
         }
-      })
+      }) //이미 존재하는 아이디이면 문자보임. 존재하지 않으면 빈 문자
       .catch((err) => {
-        console.error(err);
+        console.error(err); //서버 요청중에 에러 발생시 출력
       });
   }
   function handlePwdChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const pwd = e.target.value;
+    //비밀번호 입력이 변경될 때 호출되는 함수를 정의.
+    const pwd = e.target.value; //입력된 비밀번호 값을 pwd변수에 저장
     if (!pwd) {
+      //비밀번호가 비어있으면 아래있는 문자뜨고 함수 종료됨.
       setPwdHelperText("비밀번호를 입력해주세요.");
       return;
     }
-    setPwdHelperText("");
+    setPwdHelperText(""); //비밀번호가 비어있지 않으면 빈문자열
   }
 
   return (
+    //ThemeProvider을 사용하여 자식 컴포넌트들에게 일관된 디자인을 제공하기 위해 사용됨
     <ThemeProvider theme={theme}>
+      {" "}
+      /
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
