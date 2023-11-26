@@ -1,32 +1,53 @@
+/*라이브러리 및 컴포넌트 가져오기(import)
+:필요한 MUI(Material-UI) 컴포넌트 및 라이브러리를 가져온다
+MUI는 Material-UI 라이브러리에서 제공하는 UI 요소들을 의미한다
+Material-UI는 React 애플리케이션을 위한 재사용 가능한
+UI 컴포넌트를 제공하는 라이브러리 중 하나*/
 import Avatar from "@mui/material/Avatar";
+//Avatar: 사용자의 프로필 사진이나 아이콘을 나타내는데 사용되는 MUI 컴포넌트
 import Button from "@mui/material/Button";
+//Button: 버튼 엘리먼트를 만들기 위해 사용되는 MUI 컴포넌트
 import TextField from "@mui/material/TextField";
-// import FormControlLabel from "@mui/material/FormControlLabel";
+//import FormControlLabel from "@mui/material/FormControlLabel";
 // import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
+//Link: 하이퍼링크를 만들기 위해 사용되는 MUI 컴포넌트로, 사용자를 다른 페이지로 이동하게 할 수 있게함.
 import Grid from "@mui/material/Grid";
+//Grid: 그리드 시스템을 사용하여 페이지를 나누고 배치하는 데 사용되는 MUI 컴포넌트
 import Box from "@mui/material/Box";
+//Box: 여러 컴포넌트를 감싸거나 스타일을 적용하는데 사용되는 MUI 컴포넌트
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
+//LockOutlinedIcon: 자물쇠 아이콘을 나타내는 MUI의 아이콘 컴포넌트
 import Container from "@mui/material/Container";
+//Container: 컨텐츠를 감싸고 중앙 정렬하는 데 사용되는 MUI 컴포넌트
 import { ThemeProvider } from "@mui/material/styles";
+//ThemeProvider: 애플리케이션에 테마를 적용하기 위해 사용되는 MUI의 컴포넌트
 import type { TypographyProps } from "@mui/material/Typography";
+//Typography: 텍스트 스타일을 지정하기 위해 사용되는 MUI 컴포넌트
 import theme from "../api/theme";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/ko";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+/*AdapterDayjs, LocalizationProvider, DatePicker: Material-UI의 날짜 선택 기능을 구현하기 위한 
+컴포넌트와 관련된 라이브러리 및 컴포넌트*/
 import type { User } from "../api/user";
 import { SERVER_URL } from "../api/globals";
+/*User, SERVER_URL: 애플리케이션에서 사용되는 사용자 및 서버 URL과 같은 
+상수 및 데이터 모델을 정의한 파일에서 가져온 것*/
 import { useState } from "react";
+/*useState, React: React에서 상태(state)를 관리하고 
+컴포넌트를 작성하기 위한 React의 핵심 요소*/
 
+//Copyright 함수: 페이지 하단에 표시될 MUI저작권 정보를 표시하기 위한 함수
 function Copyright(props: TypographyProps) {
+  //함수정의
   return (
-    <Typography
+    <Typography //텍스트 스타일 설정하는 MUI
       variant="body2"
       color="text.secondary"
-      align="center"
-      {...props}
+      align="center" //정렬
+      {...props} //부모 컴포넌트에 전달된 속성을 그대로 사용 할 수 있다.
     >
       {"Copyright © "}
       <Link color="inherit" href="https://pinterest.com/">
@@ -36,27 +57,34 @@ function Copyright(props: TypographyProps) {
       {"."}
     </Typography>
   );
-}
+} //new Date() : 자바스크립트 Data객체
 
+//SignUp함수정의 : 회원가입 페이지 구현하는 함수 컴포넌트 정의.
 type SignUpUser = { pwd: string } & NonNullable<User>;
-
+// pwd가 문자열타입이고, 값이 있는 'User'타입을 가지는 객체를 나타내는 'SignUpUser'
 export default function SignUp() {
+  //SignUp 함수형 컴포넌트를 정의하고 외부에서 재사용할 수 있도록 함<div className=""></div>
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    //폼이 발생했을 때 실행되는 함수를 정의. 이벤트 객체 받아와서 아래 회원가입 처리구현
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    //폼 제출 이벤트 다룰 때 사용. 사용자가 폼에 입력힌 값을 담고 있는 객체
     const signUpUser: SignUpUser = {
+      //사용자정보 가공하여 SignUpUser타입에 맞게 객체 생성. 폼 데이터에서 필요한 값을 가져와서 SignUpUser타입에 할당.
       id: data.get("id") as string,
       pwd: data.get("pwd") as string,
       name: data.get("name") as string,
       birth: data.get("birth") as string,
     };
     if (!signUpUser.id || !signUpUser.pwd) {
+      //id,pwd 입력되있지 않으면 함수 실행 종료.
       return;
     }
-    const json = JSON.stringify(signUpUser);
+    const json = JSON.stringify(signUpUser); //signUpUser객체를 JSON문자열로 변환하고, 결과 출력함.
     console.log(json);
 
     fetch(SERVER_URL + "/members", {
+      //서버로 데이터를 전송하기 위해 fetch함수사용
       body: json,
       method: "POST",
       headers: {
@@ -65,12 +93,15 @@ export default function SignUp() {
       // mode: "no-cors",
     })
       .then((response) => {
+        //서버의 응답 받아와서 처리함
         if (response.ok) {
+          //성공하면 alert("")알림 뜨고 로그인 페이지로 이동
           alert("회원가입이 완료 되었습니다.");
           location.href = "/signin";
         }
       })
       .catch((err) => {
+        //서버 요청 중에 발생한 오류 콘솔에 기록
         console.error(err);
       });
   };
@@ -80,12 +111,15 @@ export default function SignUp() {
     useState("비밀번호를 입력해주세요.");
 
   function handleIdChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const id = e.target.value;
+    //아이디 입력이 변경될 때 호출되는 함수를 정의
+    const id = e.target.value; //입력된 아이디 값을 id변수에 저장
     if (!id) {
       setIdHelperText("아이디를 입력해주세요.");
       return;
+      //아이디가 비어있으면 메세지보이고 함수 종료됨
     }
     fetch(SERVER_URL + "/members/" + id)
+      //서버에 해당 아이디가 이미 존재하는지 확인하는 요청 보냄
       .then((response) => {
         if (response.ok) {
           setIdHelperText("이미 존재하는 아이디 입니다.");
